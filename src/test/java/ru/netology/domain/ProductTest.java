@@ -17,7 +17,7 @@ class ProductTest {
         repo.save(second);
         repo.save(third);
 
-        repo.removeById(22);
+        repo.removeById(333);
 
     }
 
@@ -33,7 +33,7 @@ class ProductTest {
         repo.save(third);
 
         assertThrows(NotFoundException.class, () -> {
-            repo.removeById(4444);
+            repo.removeById(44);
         });
     }
 }

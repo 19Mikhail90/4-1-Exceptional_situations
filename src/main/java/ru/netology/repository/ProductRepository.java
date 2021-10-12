@@ -19,29 +19,31 @@ public class ProductRepository {
         return items;
     }
 
-
     public Product findById(int id) {
         for (Product item : items) {
-            try {
-                if (item.getId() != id) {
-                    NotFoundException e = new NotFoundException("Element with id: " + id + " not found");
-                }
-            } catch (NotFoundException e) {e.printStackTrace();
+            if (item.getId() == id) {
+                return item;
             }
         }
         return null;
     }
 
-
     public void removeById(int id) {
-        int length = items.length - 1;
+        findById(id); // вызываю метод поиска сразу в методе удаления
+        if (findById(id) == null) { //если в поиске число ровно соответствует null то система переходит к выполнению след строки
+            throw new NotFoundException("Element with id: " + id + " not found"); // будет выполнено если система при соответствии условию if
+        }
+        int length = items.length - 1; //если условие не выполнилось то система пропустит действия по условию if и пойдет на эту строку
         Product[] tmp = new Product[length];
         int index = 0;
-        for
-        (Product item : items) {
-            findById(id); //это добавил
+        for (Product item : items) {
             if (item.getId() != id) {
-                tmp[index] = item;
+                try {
+                    tmp[index] = item;
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                    System.out.println("Ошибка.");
+                }
                 index++;
             }
         }
